@@ -31,3 +31,57 @@ body {
     text-wrap: balance;
   }
 }
+
+h1 {
+  font-weight: 300;
+  font-size: 123px;
+  letter-spacing: -1.5px;
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 77px;
+  letter-spacing: -0.5px;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 62px;
+  letter-spacing: 0px;
+}
+
+h4 {
+  font-weight: 400;
+  font-size: 44px;
+  letter-spacing: 0.25px;
+}
+
+h5 {
+  font-weight: 400;
+  font-size: 31px;
+  letter-spacing: 0px;
+}
+
+h6 {
+  font-weight: 500;
+  font-size: 26px;
+  letter-spacing: 0.15px;
+}
+
+p {
+  font-weight: 400;
+  font-size: 21px;
+  letter-spacing: 0.5px;
+}
+
+button {
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 1.25px;
+}
+
+legend {
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 0.4px;
+}
