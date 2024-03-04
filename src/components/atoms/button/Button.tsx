@@ -13,7 +13,7 @@ function Button(props: ButtonProps) {
   const { label, className = '', variant = 'primary', ...rest } = props;
   const variantClassname = getClassname(variant);
   return (
-    <button {...rest} className={`${variantClassname} ${className}`}>
+    <button {...rest} className={`px-5 ${variantClassname} ${className}`}>
       {label}
     </button>
   );

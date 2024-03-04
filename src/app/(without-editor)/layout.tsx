@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 import { Afacad } from 'next/font/google';
 
 // Components
-import Header from './components/header';
-import Footer from './components/footer';
-import LeftPanel from './components/leftNavigationPanel';
+import Header from './components/molecules/header';
+import Footer from './components/molecules/footer';
+import LeftPanel from './components/molecules/leftNavigationPanel';
 
 // Styles
-import './globals.css';
+import '@/styles/globals.css';
 
 const afacad = Afacad({ weight: '500', style: 'normal', subsets: ['latin'] });
 
@@ -34,3 +34,10 @@ export default function RootLayout({
     </html>
   );
 }
+
+/**
+ * Share Code -> Read only
+ * Login -> non logged in save only for 2 days
+ * Editor in full page
+ * Download
+ */
