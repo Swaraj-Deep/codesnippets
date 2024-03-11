@@ -74,6 +74,18 @@ p {
   letter-spacing: 0.5px;
 }
 
+input {
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.25px;
+}
+
+label {
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.1px;
+}
+
 button {
   font-weight: 500;
   font-size: 18px;

@@ -30,6 +30,7 @@ export default function RootLayout({
           <section className="col-start-2">{children}</section>
           <Footer />
         </main>
+        <div id="modal-root"></div>
       </body>
     </html>
   );
