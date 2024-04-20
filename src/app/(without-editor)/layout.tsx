@@ -1,10 +1,15 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Afacad } from 'next/font/google';
+
+// Constants
+import { IS_JOINED } from '@/constants/localstorageAuthKeys';
 
 // Components
 import Header from './components/molecules/header';
 import Footer from './components/molecules/footer';
 import LeftPanel from './components/molecules/leftNavigationPanel';
+import Toaster from '@/components/organisms/toaster';
 
 // Styles
 import '@/styles/globals.css';
@@ -18,11 +23,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full dark">
       <body className={`h-full ${afacad.className}`}>
         <main className="h-full grid gap-6 grid-cols-[256px_1fr] grid-rows-[96px_1fr_128px] px-6 py-8">
           <LeftPanel />
@@ -30,8 +37,14 @@ export default function RootLayout({
           <section className="col-start-2">{children}</section>
           <Footer />
         </main>
-        <div id="modal-root"></div>
+        {modal}
+        <Toaster />
       </body>
+      <Script id="cleanLoad">
+        {`
+          localStorage.removeItem('${IS_JOINED}')
+        `}
+      </Script>
     </html>
   );
 }

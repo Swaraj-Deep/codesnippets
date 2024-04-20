@@ -12,7 +12,6 @@ interface ModalProps extends DialogHTMLAttributes<HTMLDialogElement> {
 
 function Modal(props: ModalProps) {
   const { children, className, open, ...rest } = props;
-  console.log(open);
 
   return (
     open && (

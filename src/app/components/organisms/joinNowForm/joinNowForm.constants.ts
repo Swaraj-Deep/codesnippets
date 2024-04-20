@@ -23,7 +23,10 @@ export const DEFAULT_FORM_VALUES = {
 export const FIELD_ID_VS_ERROR_MESSAGES = {
   [FIELD_IDS.FIRST_NAME]: { REQUIRED_ERROR: 'First name cannot be empty' },
   [FIELD_IDS.LAST_NAME]: { REQUIRED_ERROR: 'Last name cannot be empty' },
-  [FIELD_IDS.EMAIL]: { REQUIRED_ERROR: 'Email cannot be empty' },
+  [FIELD_IDS.EMAIL]: {
+    REQUIRED_ERROR: 'Email cannot be empty',
+    DATA_INVALID_ERROR: 'Email is not valid',
+  },
   [FIELD_IDS.PASSWORD]: {
     REQUIRED_ERROR: 'Password cannot be empty',
     DATA_INVALID_ERROR: 'Passwords should match',

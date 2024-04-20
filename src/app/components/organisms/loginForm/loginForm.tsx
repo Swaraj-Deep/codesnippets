@@ -3,7 +3,6 @@ import {
   FormEvent,
   forwardRef,
   useCallback,
-  useRef,
   useState,
 } from 'react';
 
@@ -15,22 +14,22 @@ import {
   DEFAULT_FORM_VALUES,
   FIELD_IDS,
   FORM_VALUE,
-} from './joinNowForm.constants';
+} from './loginForm.constants';
 
 // Components
 import FormTextField from '@/components/molecules/formTextField';
-import { validateFieldData, validateFormData } from './joinNowForm.helpers';
+import { validateFieldData, validateFormData } from './loginForm.helpers';
 
 export type FormData = {
   [fieldName in ValueOf<typeof FIELD_IDS>]: typeof FORM_VALUE;
 };
 
-interface JoinNowFormProps {
-  onSubmit: (data: FormData, e?: FormEvent<HTMLFormElement>) => void;
+interface LoginFormProps {
+  onSubmit?: (data: FormData, e?: FormEvent<HTMLFormElement>) => void;
 }
 
-const JoinNowForm = forwardRef<HTMLFormElement, JoinNowFormProps>(
-  (props: JoinNowFormProps, ref) => {
+const LoginForm = forwardRef<HTMLFormElement, LoginFormProps>(
+  (props: LoginFormProps, ref) => {
     const { onSubmit } = props;
 
     const [isUntouched, setIsUntouched] = useState(true);
@@ -89,33 +88,10 @@ const JoinNowForm = forwardRef<HTMLFormElement, JoinNowFormProps>(
           setIsUntouched(false);
           const { updatedFormData, hasFormError } = validateFormData(formData);
           setFormData(updatedFormData);
-          if (!hasFormError) onSubmit(formData, e);
+          if (!hasFormError && onSubmit) onSubmit(formData, e);
         }}
         ref={ref}
       >
-        <div className="flex gap-2">
-          <FormTextField
-            id={FIELD_IDS.FIRST_NAME}
-            label="First Name"
-            errorMessage={formData[FIELD_IDS.FIRST_NAME].errorMessage}
-            isError={formData[FIELD_IDS.FIRST_NAME].isError}
-            isRequired
-            className="basis-3/6"
-            value={formData[FIELD_IDS.FIRST_NAME].value}
-            onChange={onFieldChange}
-            autoFocus
-          />
-          <FormTextField
-            id={FIELD_IDS.LAST_NAME}
-            label="Last Name"
-            errorMessage={formData[FIELD_IDS.LAST_NAME].errorMessage}
-            isError={formData[FIELD_IDS.LAST_NAME].isError}
-            isRequired
-            className="basis-3/6"
-            value={formData[FIELD_IDS.LAST_NAME].value}
-            onChange={onFieldChange}
-          />
-        </div>
         <FormTextField
           id={FIELD_IDS.EMAIL}
           label="Email"
@@ -136,21 +112,11 @@ const JoinNowForm = forwardRef<HTMLFormElement, JoinNowFormProps>(
           value={formData[FIELD_IDS.PASSWORD].value}
           onChange={onFieldChange}
         />
-        <FormTextField
-          id={FIELD_IDS.CONFIRM_PASSWORD}
-          label="Confirm Password"
-          errorMessage={formData[FIELD_IDS.CONFIRM_PASSWORD].errorMessage}
-          isError={formData[FIELD_IDS.CONFIRM_PASSWORD].isError}
-          isRequired
-          type="password"
-          value={formData[FIELD_IDS.CONFIRM_PASSWORD].value}
-          onChange={onFieldChange}
-        />
       </form>
     );
   }
 );
 
-JoinNowForm.displayName = 'JoinNowForm';
+LoginForm.displayName = 'LoginForm';
 
-export default JoinNowForm;
+export default LoginForm;

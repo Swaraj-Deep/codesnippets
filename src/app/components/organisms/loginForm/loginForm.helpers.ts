@@ -1,5 +1,5 @@
 // Types
-import { FormData } from './JoinNowForm';
+import { FormData } from './loginForm';
 
 // Utils
 import { ValueOf } from '@/utils/type';
@@ -9,7 +9,8 @@ import {
   FIELD_ID_VS_ERROR_MESSAGES,
   FIELD_IDS,
   FORM_VALUE,
-} from './joinNowForm.constants';
+} from './loginForm.constants';
+import { EMIAL_REGEX } from '@/constants/common';
 
 export interface ValidateFormDataResponse {
   updatedFormData: FormData;
@@ -28,116 +29,36 @@ export function validateFieldData(
   };
   hasFieldError: boolean;
 } {
-  if (fieldId === FIELD_IDS.PASSWORD) {
-    const passwordValue = currentFieldValue.value;
-    const confirmPasswordValue = formData?.confirmPassword.value;
-
-    if (passwordValue === '') {
+  if (fieldId === FIELD_IDS.EMAIL) {
+    const email = currentFieldValue.value;
+    const isValidEmail = email.toLowerCase().match(EMIAL_REGEX);
+    if (email === '') {
       return {
         updatedErrorValues: {
-          password: {
+          email: {
             isError: true,
             errorMessage:
-              FIELD_ID_VS_ERROR_MESSAGES[FIELD_IDS.PASSWORD].REQUIRED_ERROR,
+              FIELD_ID_VS_ERROR_MESSAGES[FIELD_IDS.EMAIL].REQUIRED_ERROR,
           },
         },
         hasFieldError: true,
       };
     }
-
-    if (passwordValue !== confirmPasswordValue && confirmPasswordValue !== '') {
+    if (!isValidEmail) {
       return {
         updatedErrorValues: {
-          confirmPassword: {
+          email: {
             isError: true,
             errorMessage:
-              FIELD_ID_VS_ERROR_MESSAGES[FIELD_IDS.CONFIRM_PASSWORD]
-                .DATA_INVALID_ERROR,
-          },
-          password: {
-            isError: false,
-            errorMessage: '',
+              FIELD_ID_VS_ERROR_MESSAGES[FIELD_IDS.EMAIL].DATA_INVALID_ERROR,
           },
         },
         hasFieldError: true,
       };
     }
-    if (passwordValue !== confirmPasswordValue && confirmPasswordValue === '') {
-      return {
-        updatedErrorValues: {
-          confirmPassword: {
-            isError: true,
-            errorMessage:
-              FIELD_ID_VS_ERROR_MESSAGES[FIELD_IDS.CONFIRM_PASSWORD]
-                .REQUIRED_ERROR,
-          },
-          password: {
-            isError: false,
-            errorMessage: '',
-          },
-        },
-        hasFieldError: true,
-      };
-    }
-
     return {
       updatedErrorValues: {
-        confirmPassword: {
-          isError: false,
-          errorMessage: '',
-        },
-        password: {
-          isError: false,
-          errorMessage: '',
-        },
-      },
-      hasFieldError: false,
-    };
-  }
-
-  if (fieldId === FIELD_IDS.CONFIRM_PASSWORD) {
-    const confirmPasswordValue = currentFieldValue.value;
-    const passwordValue = formData?.password.value;
-
-    if (confirmPasswordValue === '') {
-      return {
-        updatedErrorValues: {
-          confirmPassword: {
-            isError: true,
-            errorMessage:
-              FIELD_ID_VS_ERROR_MESSAGES[FIELD_IDS.CONFIRM_PASSWORD]
-                .REQUIRED_ERROR,
-          },
-        },
-        hasFieldError: true,
-      };
-    }
-
-    if (confirmPasswordValue !== passwordValue) {
-      return {
-        updatedErrorValues: {
-          confirmPassword: {
-            isError: true,
-            errorMessage:
-              FIELD_ID_VS_ERROR_MESSAGES[FIELD_IDS.CONFIRM_PASSWORD]
-                .DATA_INVALID_ERROR,
-          },
-          password: {
-            isError: false,
-            errorMessage: '',
-          },
-        },
-        hasFieldError: true,
-      };
-    }
-
-    return {
-      updatedErrorValues: {
-        confirmPassword: {
-          isError: false,
-          errorMessage: '',
-        },
-        password: {
+        email: {
           isError: false,
           errorMessage: '',
         },
