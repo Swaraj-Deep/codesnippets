@@ -1,4 +1,4 @@
 function DefaultPage() {
-  return <div></div>;
+  return null;
 }
 export default DefaultPage;

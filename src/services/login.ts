@@ -3,7 +3,7 @@ import { BASE_URL, GET_USER } from './services.constants';
 
 function getUser(
   userData: typeof UserDataType,
-  onSuccess: (data: { token: string }) => void,
+  onSuccess: (data: { token: string; user: { firstName: string } }) => void,
   onError: (error: {
     success: boolean;
     error: { message: string; title: string };
@@ -26,12 +26,12 @@ function getUser(
       return resp.json();
     })
     .then(({ data, success }) => {
-      if (success) {
-        onSuccess({ token: data.token });
+      if (success) {        
+        onSuccess({ token: data.token, user: data.user });
       }
     })
     .catch((err) => {
-      err.json().then(onError);
+      err?.json()?.then(onError);
     })
     .finally(onFinally);
 }

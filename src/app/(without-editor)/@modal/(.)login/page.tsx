@@ -15,6 +15,9 @@ import onError from '@/utils/errorHandlers';
 // Actions
 import { onLogin } from '@/actions/authentication';
 
+// Hooks
+import { useAuth } from '@/providers/AuthProvider';
+
 // Components
 import Modal, {
   ModalHeader,
@@ -24,9 +27,11 @@ import Modal, {
 import Button from '@/components/atoms/button';
 import LoginForm from '@/app/components/organisms/loginForm';
 
-function JoinNow() {
+function Login() {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
+  const { handleAuthDataUpdate } = useAuth();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
@@ -40,7 +45,7 @@ function JoinNow() {
             setIsSubmitting(true);
             getUser(
               data,
-              onLogin({ router, isModalLogin: true }),
+              onLogin({ router, isModalLogin: true, handleAuthDataUpdate }),
               onError,
               () => setIsSubmitting(false)
             );
@@ -74,4 +79,4 @@ function JoinNow() {
   );
 }
 
-export default JoinNow;
+export default Login;

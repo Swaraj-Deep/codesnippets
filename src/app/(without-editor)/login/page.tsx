@@ -12,12 +12,16 @@ import { onLogin } from '@/actions/authentication';
 // Utils
 import onError from '@/utils/errorHandlers';
 
+// Hooks
+import { useAuth } from '@/providers/AuthProvider';
+
 // Components
 import LoginForm from '@/app/components/organisms/loginForm';
 import Button from '@/components/atoms/button';
 
-function JoinNow() {
+function Login() {
   const router = useRouter();
+  const { handleAuthDataUpdate } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,8 +31,11 @@ function JoinNow() {
         <LoginForm
           onSubmit={(data) => {
             setIsSubmitting(true);
-            getUser(data, onLogin({ router }), onError, () =>
-              setIsSubmitting(false)
+            getUser(
+              data,
+              onLogin({ router, handleAuthDataUpdate }),
+              onError,
+              () => setIsSubmitting(false)
             );
           }}
           ref={formRef}
@@ -47,4 +54,4 @@ function JoinNow() {
   );
 }
 
-export default JoinNow;
+export default Login;

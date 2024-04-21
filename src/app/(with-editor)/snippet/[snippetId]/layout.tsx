@@ -9,6 +9,7 @@ import { IS_JOINED } from '@/constants/localstorageAuthKeys';
 import Header from './components/molecules/header';
 import Footer from './components/molecules/footer';
 import Toaster from '@/components/organisms/toaster';
+import AuthProvider from '@/providers/AuthProvider';
 
 // Styles
 import '@/styles/globals.css';
@@ -28,12 +29,14 @@ export default function SnippetsLayout({
   return (
     <html lang="en" className="h-full dark">
       <body className={`h-full ${afacad.className}`}>
-        <main className="h-full px-6 py-2 grid grid-rows-[48px_1fr_96px] gap-4">
-          <Header />
-          <section className="row-start-2 h-full">{children}</section>
-          <Footer />
-        </main>
-        <Toaster />
+        <AuthProvider>
+          <main className="h-full px-6 py-2 grid grid-rows-[48px_1fr_96px] gap-4">
+            <Header />
+            <section className="row-start-2 h-full">{children}</section>
+            <Footer />
+          </main>
+          <Toaster />
+        </AuthProvider>
       </body>
       <Script id="cleanLoad">
         {`

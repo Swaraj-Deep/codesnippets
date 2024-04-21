@@ -9,16 +9,21 @@ import { EDITOR_OPTIONS } from './constants/editorOptions';
 // Components
 import EditorLoading from './components/atoms/editor-loading';
 
-function onChange(value: string | undefined) {
-  console.log(value);
+interface EditorProps {
+  onChange: (value: string | undefined) => void;
+  defaultValue: string;
 }
 
-const debouncedOnChange = debounce(onChange, 500);
+function Editor(props: EditorProps) {
+  // savedCode || '// Start writing code and share with peer developers.\n';
+  const { defaultValue, onChange } = props;
 
-function Editor() {
+  const debouncedOnChange = debounce(onChange, 500);
+
   return (
     <ReactEditor
       {...EDITOR_OPTIONS}
+      defaultValue={defaultValue}
       loading={<EditorLoading />}
       onMount={(editor) => {
         editor.setPosition({ column: 1, lineNumber: 2 });

@@ -10,6 +10,7 @@ import Header from './components/molecules/header';
 import Footer from './components/molecules/footer';
 import LeftPanel from './components/molecules/leftNavigationPanel';
 import Toaster from '@/components/organisms/toaster';
+import AuthProvider from '@/providers/AuthProvider';
 
 // Styles
 import '@/styles/globals.css';
@@ -31,14 +32,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full dark">
       <body className={`h-full ${afacad.className}`}>
-        <main className="h-full grid gap-6 grid-cols-[256px_1fr] grid-rows-[96px_1fr_128px] px-6 py-8">
-          <LeftPanel />
-          <Header />
-          <section className="col-start-2">{children}</section>
-          <Footer />
-        </main>
-        {modal}
-        <Toaster />
+        <AuthProvider>
+          <main className="h-full grid gap-6 grid-cols-[256px_1fr] grid-rows-[96px_1fr_128px] px-6 py-8">
+            <LeftPanel />
+            <Header />
+            <section className="col-start-2">{children}</section>
+            <Footer />
+          </main>
+          {modal}
+          <Toaster />
+        </AuthProvider>
       </body>
       <Script id="cleanLoad">
         {`

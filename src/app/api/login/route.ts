@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 // Hack for TypeScript before 5.2
 const Response = NextResponse;
 
@@ -10,6 +11,7 @@ import { sign } from 'jsonwebtoken';
 
 import { EMIAL_REGEX } from '@/constants/common';
 import { ERROR_CODES, ERROR_CODES_VS_MESSAGE } from '@/constants/errorCodes';
+import { AUTH_TOKEN } from '@/constants/localstorageAuthKeys';
 
 export async function POST(request: Request) {
   const payload = await request.json();
@@ -46,11 +48,16 @@ export async function POST(request: Request) {
         algorithm: 'HS256',
       });
 
+      cookies().set(AUTH_TOKEN, token, { secure: true });
+
       return Response.json(
         {
           success: true,
           data: {
             token,
+            user: {
+              firstName,
+            },
           },
         },
         { status: 200 }
