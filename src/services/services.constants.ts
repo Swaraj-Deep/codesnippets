@@ -5,3 +5,5 @@ export const CREATE_USER = '/joinNow';
 export const GET_USER = '/login';
 
 export const VERIFY_JWT = '/verify';
+
+export const SNIPPETS = '/snippets';

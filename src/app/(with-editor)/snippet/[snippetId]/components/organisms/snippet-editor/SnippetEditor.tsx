@@ -1,21 +1,25 @@
 'use client';
 
-import { useQuery } from 'convex/react';
-import { api } from '@/convex/generated/api';
-
 // Components
 import Editor from '@/components/organisms/editor';
 import { CODE } from '@/constants/localstorage';
+import { getCodeSnippetToDisplay } from '@/helpers/snippets';
 
-function SnippetEditor() {
-  // const codes = useQuery(api.code.get);
+interface SnippetEditorProps {
+  snippetId: string;
+  savedSnippet: { codeSnippet: string; version: number };
+}
+
+function SnippetEditor(props: SnippetEditorProps) {
+  const { snippetId, savedSnippet } = props;
   function onChange(value: string | undefined) {
-    console.log(value);
-    localStorage.setItem(CODE, value || '');
+    localStorage.setItem(
+      CODE,
+      snippetId + '|' + (savedSnippet.version + 1) + '|' + value || ''
+    );
   }
 
-  const savedCode =
-    typeof window !== 'undefined' ? localStorage.getItem(CODE) : '';
+  const savedCode = getCodeSnippetToDisplay(snippetId, savedSnippet);
 
   return (
     <Editor

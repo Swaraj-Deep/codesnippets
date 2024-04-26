@@ -1,7 +1,7 @@
 'use client';
 
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 
 // Constants
 import { ROUTES } from '@/constants/routes';
@@ -18,6 +18,8 @@ import Logo from '@/components/atoms/logo';
 import { useEffect, useState } from 'react';
 import { AUTH_TOKEN } from '@/constants/localstorageAuthKeys';
 import onError from '@/utils/errorHandlers';
+import saveSnippet from '@/services/snippets';
+import { getLocalSavedSnippet } from '@/helpers/snippets';
 
 function renderNonLoggedIn(pathName: string, router: AppRouterInstance) {
   return (
@@ -37,7 +39,7 @@ function renderNonLoggedIn(pathName: string, router: AppRouterInstance) {
           router.push(ROUTES.JOIN_NOW, { scroll: false })
         }
       />
-  </>
+    </>
   );
 }
 
@@ -52,7 +54,9 @@ function renderLoggedIn(user: { firstName: string }) {
 function Header() {
   const router = useRouter();
   const pathName = usePathname();
+  const { snippetId } = useParams() as { snippetId: string };
   const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const { data, handleAuthDataUpdate } = useAuth();
   const { isLoggedIn, user } = data;
 
@@ -73,7 +77,25 @@ function Header() {
     <header className="flex justify-between items-center">
       <Logo className="h-12" />
       <div className="flex gap-2">
-        <Button label="Save" />
+        <Button
+          label="Save"
+          className="w-[84px]"
+          onClick={() => {
+            setIsSaving(true);
+            saveSnippet(
+              {
+                snippetId: snippetId,
+                code: getLocalSavedSnippet(snippetId) || '',
+              },
+              () => {},
+              (data) => {
+                onError(data);
+              },
+              () => setIsSaving(false)
+            );
+          }}
+          isLoading={isSaving}
+        />
         {isLoading ? (
           <div className="animate-pulse h-[44px] w-[180px] bg-gray-700 rounded-sm"></div>
         ) : isLoggedIn ? (
