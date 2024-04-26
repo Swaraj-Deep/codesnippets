@@ -25,7 +25,7 @@ export const createCode = mutation({
       .collect();
     try {
       if (!savedCode) {
-        await ctx.db.insert('code', { ...data, version: 0 });
+        await ctx.db.insert('code', { ...data, version: 0, isShared: false });
       } else {
         const { version } = savedCode;
         await ctx.db.patch(savedCode._id, {
