@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="col-start-2 mt-6">
+    <footer className="mt-6">
       <p>
         CodeSnippets is a platform that allows developers to share, save, and
         collaborate on code snippets and projects. Our mission is to foster a

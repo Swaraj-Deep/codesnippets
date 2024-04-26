@@ -6,7 +6,7 @@ import { PARAMS } from '@/constants/params';
 
 // Components
 import ConvexClientProvider from '@/providers/ConvexClientProvider';
-import SnippetEditor from './components/organisms/snippet-editor';
+import SnippetEditor from '../../components/organisms/snippet-editor';
 import { getSnippet } from '@/services/snippets';
 import onError from '@/utils/errorHandlers';
 

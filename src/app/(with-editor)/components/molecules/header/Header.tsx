@@ -1,25 +1,30 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 
 // Constants
 import { ROUTES } from '@/constants/routes';
+import { AUTH_TOKEN } from '@/constants/localstorageAuthKeys';
 
 // Hooks
 import { useAuth } from '@/providers/AuthProvider';
 
+// Utils
+import onError from '@/utils/errorHandlers';
+
+// Helpers
+import { getLocalSavedSnippet } from '@/helpers/snippets';
+
 // Services
+import saveSnippet from '@/services/snippets';
 import { verifyJWT } from '@/services/verify';
 
 // Components
 import Button from '@/components/atoms/button';
 import Logo from '@/components/atoms/logo';
-import { useEffect, useState } from 'react';
-import { AUTH_TOKEN } from '@/constants/localstorageAuthKeys';
-import onError from '@/utils/errorHandlers';
-import saveSnippet from '@/services/snippets';
-import { getLocalSavedSnippet } from '@/helpers/snippets';
+import ShareModal from './organisms/shareModal';
 
 function renderNonLoggedIn(pathName: string, router: AppRouterInstance) {
   return (
@@ -77,6 +82,7 @@ function Header() {
     <header className="flex justify-between items-center">
       <Logo className="h-12" />
       <div className="flex gap-2">
+        <ShareModal />
         <Button
           label="Save"
           className="w-[84px]"

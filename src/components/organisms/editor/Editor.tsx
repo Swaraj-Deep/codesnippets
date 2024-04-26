@@ -4,25 +4,30 @@ import ReactEditor from '@monaco-editor/react';
 import debounce from 'lodash.debounce';
 
 // Constants
-import { EDITOR_OPTIONS } from './constants/editorOptions';
+import {
+  EDITOR_OPTIONS,
+  READ_ONLY_EDITOR_OPTIONS,
+} from './constants/editorOptions';
 
 // Components
 import EditorLoading from './components/atoms/editor-loading';
 
 interface EditorProps {
-  onChange: (value: string | undefined) => void;
+  onChange?: (value: string | undefined) => void;
   defaultValue: string;
+  readOnly?: boolean;
 }
 
 function Editor(props: EditorProps) {
   // savedCode || '// Start writing code and share with peer developers.\n';
-  const { defaultValue, onChange } = props;
+  const { defaultValue, readOnly, onChange = () => {} } = props;
 
   const debouncedOnChange = debounce(onChange, 500);
+  const editorOptions = readOnly ? READ_ONLY_EDITOR_OPTIONS : EDITOR_OPTIONS;
 
   return (
     <ReactEditor
-      {...EDITOR_OPTIONS}
+      {...editorOptions}
       defaultValue={defaultValue}
       loading={<EditorLoading />}
       onMount={(editor) => {

@@ -21,13 +21,6 @@ function LeftNavigationPanel() {
             className="p-4 h-20 border-4"
           />
         </li>
-        <li>
-          <LinkButton
-            href={ROUTES.SEARCH}
-            label="Search Snippets"
-            variant="outline"
-          />
-        </li>
       </ul>
     </nav>
   );

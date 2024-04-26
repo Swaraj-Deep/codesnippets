@@ -6,8 +6,8 @@ import { Afacad } from 'next/font/google';
 import { IS_JOINED } from '@/constants/localstorageAuthKeys';
 
 // Components
-import Header from '../../components/molecules/header';
-import Footer from '../../components/molecules/footer';
+import Header from '../components/molecules/header';
+import Footer from '../components/molecules/footer';
 import Toaster from '@/components/organisms/toaster';
 import AuthProvider from '@/providers/AuthProvider';
 
